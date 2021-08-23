@@ -1,0 +1,12 @@
+___awdiv: CODE, 846 0 108
+_put232: CODE, 1180 0 25
+_main: CODE, 614 0 232
+_xmodem_receive: CODE, 369 0 245
+_get232: CODE, 1134 0 46
+_interruptFct: CODE, 4 0 9
+_hexToInt: CODE, 1205 0 22
+_goFlashage: CODE, 954 0 97
+_decodeHexFile: CODE, 15 0 354
+_putc232: CODE, 1227 0 12
+_litOctetStart: CODE, 1259 0 8
+Total: 1158
