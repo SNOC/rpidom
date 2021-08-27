@@ -9,7 +9,7 @@
 unsigned long compteur;
 
 unsigned char voieActive = 0;
-unsigned char received;
+unsigned char received='y';
 
 unsigned char cptReboot;
 
@@ -22,12 +22,20 @@ void interrupt interruptFct(void) {
 
 	LATA5 = ~RA5;
 	if (RCIF) {
-		if ((!OERR) && (!FERR)) {
+		if (OERR) {
+			// overun error 
 			received = RCREG & 0x7F;
-			if (received == 0x61)  {		// 'a'
+			CREN = 0;
+		}
+		if (!FERR) {
+//			TXREG = received;
+			received = RCREG & 0x7F;
+//			if (received == 0x61)  {		// 'a'
+			if (received == 0x41)  {		// 'A'
 				voieActive = 0;
 			} 
-			if (received == 0x62)  {		// 'b'
+//			if (received == 0x62)  {		// 'b'
+			if (received == 0x42)  {		// 'B'
 				voieActive = 1;
 			}
 	
@@ -44,6 +52,8 @@ void interrupt interruptFct(void) {
 			} else {
 				cptReboot = 0;
 			}
+		} else {
+			received = RCREG & 0x7F;	// j'ai l'impression qu'il faut lire la caractère quand même lorsqu'il y a FERR
 		}
 	}
 //	if (IOCAF & (1 << TELEINFO2_PIN_NUMBER))  {
@@ -70,7 +80,6 @@ void interrupt interruptFct(void) {
 		}
 		IOCAF2 = 0;
 	}
-
 
 }
 

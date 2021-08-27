@@ -21,7 +21,7 @@ Linker command line:
   -pfunctab=CODE -ACONFIG=08007h-08008h -pconfig=CONFIG -DCONFIG=2 \
   -AIDLOC=08000h-08003h -pidloc=IDLOC -DIDLOC=2 -AEEDATA=00h-0FFh/0F000h \
   -peeprom_data=EEDATA -DEEDATA=2 -DCODE=2 -DSTRCODE=2 -DSTRING=2 -DCONST=2 \
-  -DENTRY=2 -k C:\Users\AVILI_~1\AppData\Local\Temp\s5to.obj appli.obj 
+  -DENTRY=2 -k C:\Users\AVILI_~1\AppData\Local\Temp\s5p0.obj appli.obj 
 
 Object code version is 3.10
 
@@ -30,37 +30,39 @@ Machine type is 12LF1822
 
 
                 Name                               Link     Load   Length Selector   Space Scale
-C:\Users\AVILI_~1\AppData\Local\Temp\s5to.obj
-                end_init                            595      595        2      A08       0
+C:\Users\AVILI_~1\AppData\Local\Temp\s5p0.obj
+                end_init                            5A3      5A3        2      A08       0
                 reset_vec                           500      500        1      A00       0
-appli.obj       intentry                            504      504       91      A08       0
-                text246                             609      609        E      A08       0
-                text245                             61F      61F        8      A08       0
-                text243                             5FB      5FB        E      A08       0
-                text242                             617      617        8      A08       0
-                maintext                            597      597       4C      A08       0
+appli.obj       intentry                            504      504       9F      A08       0
+                text246                             61B      61B        E      A08       0
+                text245                             631      631        8      A08       0
+                text243                             60D      60D        E      A08       0
+                text242                             629      629        8      A08       0
+                maintext                            5A5      5A5       4C      A08       0
                 cstackBANK0                          26       26        2       20       1
                 cstackCOMMON                         76       76        4       70       1
                 dataBANK0                            20       20        6       20       1
+                dataCOMMON                           7A       7A        1       70       1
                 bssCOMMON                            70       70        6       70       1
-                cinit                               5E3      5E3       18      A08       0
-                nvCOMMON                             7A       7A        1       70       1
-                idataBANK0                          627      627        6      A08       0
+                cinit                               5F1      5F1       1C      A08       0
+                idataCOMMON                         63F      63F        1      A08       0
+                idataBANK0                          639      639        6      A08       0
 
 TOTAL           Name                               Link     Load   Length     Space
         CLASS   CONST          
 
         CLASS   CODE           
-                end_init                            595      595        2         0
-                intentry                            504      504       91         0
+                end_init                            5A3      5A3        2         0
+                intentry                            504      504       9F         0
                 reset_vec                           500      500        1         0
-                text246                             609      609        E         0
-                text245                             61F      61F        8         0
-                text243                             5FB      5FB        E         0
-                text242                             617      617        8         0
-                maintext                            597      597       4C         0
-                cinit                               5E3      5E3       18         0
-                idataBANK0                          627      627        6         0
+                text246                             61B      61B        E         0
+                text245                             631      631        8         0
+                text243                             60D      60D        E         0
+                text242                             629      629        8         0
+                maintext                            5A5      5A5       4C         0
+                cinit                               5F1      5F1       1C         0
+                idataCOMMON                         63F      63F        1         0
+                idataBANK0                          639      639        6         0
 
         CLASS   STRCODE        
 
@@ -79,8 +81,8 @@ TOTAL           Name                               Link     Load   Length     Sp
 
         CLASS   COMMON         
                 cstackCOMMON                         76       76        4         1
+                dataCOMMON                           7A       7A        1         1
                 bssCOMMON                            70       70        6         1
-                nvCOMMON                             7A       7A        1         1
 
         CLASS   SFR0           
 
@@ -223,7 +225,7 @@ SEGMENTS        Name                           Load    Length   Top    Selector 
                 dataBANK0                      000020  000008  000028        20       1  BANK0       1
                 bssCOMMON                      000070  00000B  00007B        70       1  COMMON      1
                 reset_vec                      000500  000001  000501       A00       0  CODE        2
-                intentry                       000504  000129  00062D       A08       0  CODE        2
+                intentry                       000504  00013C  000640       A08       0  CODE        2
 
 
 UNUSED ADDRESS RANGES
@@ -233,11 +235,11 @@ UNUSED ADDRESS RANGES
         BANK1            00A0-00BF             20           1
         BIGRAM           2000-206F             70           1
         CODE             0501-0503              3           2
-                         062D-07FF            1D3
+                         0640-07FF            1C0
         COMMON           007B-007D              3           1
         CONFIG           8007-8008              2           2
         CONST            0501-0503              3           2
-                         062D-07FF             D3
+                         0640-07FF             C0
         EEDATA           F000-F0FF            100           2
         IDLOC            8000-8003              4           2
         RAM              0028-006F             48           1
@@ -275,7 +277,7 @@ UNUSED ADDRESS RANGES
         SFR8             0400-046F             70           1
         SFR9             0480-04EF             70           1
         STRCODE          0501-0503              3           2
-                         062D-07FF            1D3
+                         0640-07FF            1C0
 
                                   Symbol Table
 
@@ -382,15 +384,16 @@ __Hconfig                    config       0000
 __HcstackBANK0               cstackBANK0  0000
 __HcstackCOMMON              cstackCOMMON 0000
 __HdataBANK0                 dataBANK0    0000
+__HdataCOMMON                dataCOMMON   0000
 __Heeprom_data               eeprom_data  0000
-__Hend_init                  end_init     0597
+__Hend_init                  end_init     05A5
 __Hfunctab                   functab      0000
 __HidataBANK0                idataBANK0   0000
+__HidataCOMMON               idataCOMMON  0000
 __Hidloc                     idloc        0000
-__Hinit                      init         0595
-__Hintentry                  intentry     0595
+__Hinit                      init         05A3
+__Hintentry                  intentry     05A3
 __Hmaintext                  maintext     0000
-__HnvCOMMON                  nvCOMMON     0000
 __Hpowerup                   powerup      0000
 __Hram                       ram          0000
 __Hreset_vec                 reset_vec    0501
@@ -471,15 +474,16 @@ __Lconfig                    config       0000
 __LcstackBANK0               cstackBANK0  0000
 __LcstackCOMMON              cstackCOMMON 0000
 __LdataBANK0                 dataBANK0    0000
+__LdataCOMMON                dataCOMMON   0000
 __Leeprom_data               eeprom_data  0000
-__Lend_init                  end_init     0595
+__Lend_init                  end_init     05A3
 __Lfunctab                   functab      0000
 __LidataBANK0                idataBANK0   0000
+__LidataCOMMON               idataCOMMON  0000
 __Lidloc                     idloc        0000
-__Linit                      init         0595
+__Linit                      init         05A3
 __Lintentry                  intentry     0504
 __Lmaintext                  maintext     0000
-__LnvCOMMON                  nvCOMMON     0000
 __Lpowerup                   powerup      0000
 __Lram                       ram          0000
 __Lreset_vec                 reset_vec    0500
@@ -517,27 +521,28 @@ __Lsfr8                      sfr8         0000
 __Lsfr9                      sfr9         0000
 __Lstrings                   strings      0000
 __Ltext                      text         0000
-__S0                         (abs)        062D
+__S0                         (abs)        0640
 __S1                         (abs)        007B
 __S2                         (abs)        0000
-__end_of_ecritOctetStart     text243      0609
-__end_of_interruptFct        intentry     0595
-__end_of_litOctetStart       text242      061F
-__end_of_main                maintext     05E3
-__end_of_rebootEnBootloader  text245      0627
-__end_ofi1_ecritOctetStart   text246      0617
+__end_of_ecritOctetStart     text243      061B
+__end_of_interruptFct        intentry     05A3
+__end_of_litOctetStart       text242      0631
+__end_of_main                maintext     05F1
+__end_of_rebootEnBootloader  text245      0639
+__end_ofi1_ecritOctetStart   text246      0629
 __pbssCOMMON                 bssCOMMON    0070
 __pcstackBANK0               cstackBANK0  0026
 __pcstackCOMMON              cstackCOMMON 0076
 __pdataBANK0                 dataBANK0    0020
-__pidataBANK0                idataBANK0   0627
+__pdataCOMMON                dataCOMMON   007A
+__pidataBANK0                idataBANK0   0639
+__pidataCOMMON               idataCOMMON  063F
 __pintentry                  intentry     0504
-__pmaintext                  maintext     0597
-__pnvCOMMON                  nvCOMMON     007A
-__ptext242                   text242      0617
-__ptext243                   text243      05FB
-__ptext245                   text245      061F
-__ptext246                   text246      0609
+__pmaintext                  maintext     05A5
+__ptext242                   text242      0629
+__ptext243                   text243      060D
+__ptext245                   text245      0631
+__ptext246                   text246      061B
 __ptext247                   text247      0000
 __size_of_ecritOctetStart    (abs)        0000
 __size_of_interruptFct       (abs)        0000
@@ -548,18 +553,18 @@ __size_ofi1_ecritOctetStart  (abs)        0000
 _cmd_reboot                  dataBANK0    0020
 _compteur                    bssCOMMON    0070
 _cptReboot                   bssCOMMON    0074
-_ecritOctetStart             text243      05FB
-_exit                        init         0595
+_ecritOctetStart             text243      060D
+_exit                        init         05A3
 _interruptFct                intentry     0504
-_litOctetStart               text242      0617
-_main                        maintext     0597
-_rebootEnBootloader          text245      061F
-_received                    nvCOMMON     007A
+_litOctetStart               text242      0629
+_main                        maintext     05A5
+_rebootEnBootloader          text245      0631
+_received                    dataCOMMON   007A
 _voieActive                  bssCOMMON    0075
 btemp                        (abs)        007E
 ecritOctetStart@valeur       cstackCOMMON 0079
-end_of_initialization        cinit        05F9
-i1_ecritOctetStart           text246      0609
+end_of_initialization        cinit        060B
+i1_ecritOctetStart           text246      061B
 i1ecritOctetStart@valeur     cstackCOMMON 0076
 intlevel0                    functab      0000
 intlevel1                    functab      0000
@@ -569,6 +574,6 @@ intlevel4                    functab      0000
 intlevel5                    functab      0000
 main@reponse                 cstackBANK0  0027
 reset_vec                    reset_vec    0500
-start                        init         0595
-start_initialization         cinit        05E3
+start                        init         05A3
+start_initialization         cinit        05F1
 wtemp0                       (abs)        007E

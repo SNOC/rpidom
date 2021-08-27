@@ -1,5 +1,5 @@
 
-# 1 "C:\Users\avili_000\Dropbox\rpi yad\carte home automation\pic\appli\main.c"
+# 1 "C:\Users\avili_000\Dropbox\rpi yad\carte home automation\pic\appliEdx\main.c"
 
 # 132 "C:\Program Files (x86)\HI-TECH Software\PICC\9.83\include\pic12lf1822.h"
 volatile unsigned char INDF0 @ 0x000;
@@ -2014,11 +2014,11 @@ extern void memcpyee(eeprom unsigned char *to, const unsigned char *from, unsign
 #pragma inline(_delay)
 extern void _delay(unsigned long);
 
-# 9 "C:\Users\avili_000\Dropbox\rpi yad\carte home automation\pic\appli\main.c"
+# 9 "C:\Users\avili_000\Dropbox\rpi yad\carte home automation\pic\appliEdx\main.c"
 unsigned long compteur;
 
 unsigned char voieActive = 0;
-unsigned char received;
+unsigned char received='y';
 
 unsigned char cptReboot;
 
@@ -2031,12 +2031,20 @@ void interrupt interruptFct(void) {
 
 LATA5 = ~RA5;
 if (RCIF) {
-if ((!OERR) && (!FERR)) {
+if (OERR) {
+
 received = RCREG & 0x7F;
-if (received == 0x61) {
+CREN = 0;
+}
+if (!FERR) {
+
+received = RCREG & 0x7F;
+
+if (received == 0x41) {
 voieActive = 0;
 }
-if (received == 0x62) {
+
+if (received == 0x42) {
 voieActive = 1;
 }
 
@@ -2053,6 +2061,8 @@ rebootEnBootloader();
 } else {
 cptReboot = 0;
 }
+} else {
+received = RCREG & 0x7F;
 }
 }
 
@@ -2080,7 +2090,6 @@ LATA0 = 0;
 IOCAF2 = 0;
 }
 
-
 }
 
 void ecritOctetStart(unsigned char valeur) {
@@ -2093,7 +2102,7 @@ EECON2=0x55;
 EECON2=0xAA;
 WR = 1;
 
-# 86
+# 95
 #asm
   nop
   nop
@@ -2115,7 +2124,7 @@ PEIE = 0;
 
 ecritOctetStart('V');
 
-# 106
+# 115
 #asm
   goto 0
 #endasm 
@@ -2128,7 +2137,7 @@ unsigned char reponse = 'a';
 
 cptReboot = 0;
 
-# 120
+# 129
 SSPEN = 0;
 CREN = 0;
 TXEN = 0;

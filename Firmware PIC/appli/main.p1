@@ -1481,17 +1481,17 @@ Version 3.2 HI-TECH Software Intermediate Code
 [n S170 . . ]
 "2170 C:\Program Files (x86)\HI-TECH Software\PICC\9.83\include\pic12lf1822.h
 [v _TOSHbits `VS170  1 e@4079 ]
-"9 C:\Users\avili_000\Dropbox\rpi yad\carte home automation\pic\appli\main.c
+"9 C:\Users\avili_000\Dropbox\rpi yad\carte home automation\pic\appliEdx\main.c
 [v _compteur `ul  1 e ]
-"11 C:\Users\avili_000\Dropbox\rpi yad\carte home automation\pic\appli\main.c
+"11 C:\Users\avili_000\Dropbox\rpi yad\carte home automation\pic\appliEdx\main.c
 [v _voieActive `uc  1 e ]
-"12 C:\Users\avili_000\Dropbox\rpi yad\carte home automation\pic\appli\main.c
+"12 C:\Users\avili_000\Dropbox\rpi yad\carte home automation\pic\appliEdx\main.c
 [v _received `uc  1 e ]
-"14 C:\Users\avili_000\Dropbox\rpi yad\carte home automation\pic\appli\main.c
+"14 C:\Users\avili_000\Dropbox\rpi yad\carte home automation\pic\appliEdx\main.c
 [v _cptReboot `uc  1 e ]
-"19 C:\Users\avili_000\Dropbox\rpi yad\carte home automation\pic\appli\main.c
+"19 C:\Users\avili_000\Dropbox\rpi yad\carte home automation\pic\appliEdx\main.c
 [v _cmd_reboot `uc  -> 0 `x e ]
-"17 C:\Users\avili_000\Dropbox\rpi yad\carte home automation\pic\appli\main.c
+"17 C:\Users\avili_000\Dropbox\rpi yad\carte home automation\pic\appliEdx\main.c
 [v _rebootEnBootloader `(v  0 ef ]
 [p mainexit ]
 [; ;pic12lf1822.h: 132: volatile unsigned char INDF0 @ 0x000;
@@ -2889,12 +2889,16 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;eeprom_routines.h: 44: extern void memcpyee(eeprom unsigned char *to, const unsigned char *from, unsigned char size);
 [; ;pic.h: 154: extern void _delay(unsigned long);
 [; ;main.c: 9: unsigned long compteur;
-"11 C:\Users\avili_000\Dropbox\rpi yad\carte home automation\pic\appli\main.c
+"11 C:\Users\avili_000\Dropbox\rpi yad\carte home automation\pic\appliEdx\main.c
 [i _voieActive
 -> -> 0 `i `uc
 ]
 [; ;main.c: 11: unsigned char voieActive = 0;
-[; ;main.c: 12: unsigned char received;
+"12
+[i _received
+-> -> 121 `ui `uc
+]
+[; ;main.c: 12: unsigned char received='y';
 [; ;main.c: 14: unsigned char cptReboot;
 [; ;main.c: 17: void rebootEnBootloader();
 "19
@@ -2923,400 +2927,423 @@ Version 3.2 HI-TECH Software Intermediate Code
 "24
 [e $ ! _RCIF 173  ]
 {
-[; ;main.c: 25: if ((!OERR) && (!FERR)) {
+[; ;main.c: 25: if (OERR) {
 "25
-[e $ ! && ! _OERR ! _FERR 174  ]
+[e $ ! _OERR 174  ]
 {
-[; ;main.c: 26: received = RCREG & 0x7F;
-"26
-[e = _received -> & -> _RCREG `i -> 127 `i `uc ]
-[; ;main.c: 27: if (received == 0x61) {
+[; ;main.c: 27: received = RCREG & 0x7F;
 "27
-[e $ ! == -> _received `i -> 97 `i 175  ]
-{
-[; ;main.c: 28: voieActive = 0;
+[e = _received -> & -> _RCREG `i -> 127 `i `uc ]
+[; ;main.c: 28: CREN = 0;
 "28
-[e = _voieActive -> -> 0 `i `uc ]
+[e = _CREN -> -> 0 `i `b ]
 "29
 }
-[e :U 175 ]
+[e :U 174 ]
 [; ;main.c: 29: }
-[; ;main.c: 30: if (received == 0x62) {
+[; ;main.c: 30: if (!FERR) {
 "30
-[e $ ! == -> _received `i -> 98 `i 176  ]
+[e $ ! ! _FERR 175  ]
 {
-[; ;main.c: 31: voieActive = 1;
-"31
-[e = _voieActive -> -> 1 `i `uc ]
+[; ;main.c: 32: received = RCREG & 0x7F;
 "32
+[e = _received -> & -> _RCREG `i -> 127 `i `uc ]
+[; ;main.c: 34: if (received == 0x41) {
+"34
+[e $ ! == -> _received `i -> 65 `i 176  ]
+{
+[; ;main.c: 35: voieActive = 0;
+"35
+[e = _voieActive -> -> 0 `i `uc ]
+"36
 }
 [e :U 176 ]
-[; ;main.c: 32: }
-[; ;main.c: 35: if (cptReboot < 5) {
-"35
-[e $ ! < -> _cptReboot `i -> 5 `i 177  ]
-{
-[; ;main.c: 36: if (received == cmd_reboot[cptReboot]) {
-"36
-[e $ ! == -> _received `i -> *U + &U _cmd_reboot * -> _cptReboot `ux -> -> # *U &U _cmd_reboot `ui `ux `i 178  ]
-{
-[; ;main.c: 37: cptReboot++;
-"37
-[e ++ _cptReboot -> -> 1 `i `uc ]
+[; ;main.c: 36: }
+[; ;main.c: 38: if (received == 0x42) {
 "38
-}
-[; ;main.c: 38: } else {
-[e $U 179  ]
-[e :U 178 ]
+[e $ ! == -> _received `i -> 66 `i 177  ]
 {
-[; ;main.c: 39: cptReboot = 0;
+[; ;main.c: 39: voieActive = 1;
 "39
-[e = _cptReboot -> -> 0 `i `uc ]
+[e = _voieActive -> -> 1 `i `uc ]
 "40
 }
-[e :U 179 ]
-[; ;main.c: 40: }
-[; ;main.c: 41: if (cptReboot >= 3) {
-"41
-[e $ ! >= -> _cptReboot `i -> 3 `i 180  ]
-{
-[; ;main.c: 42: rebootEnBootloader();
-"42
-[e ( _rebootEnBootloader ..  ]
-"43
-}
-[e :U 180 ]
-"44
-}
-[; ;main.c: 43: }
-[; ;main.c: 44: } else {
-[e $U 181  ]
 [e :U 177 ]
+[; ;main.c: 40: }
+[; ;main.c: 43: if (cptReboot < 5) {
+"43
+[e $ ! < -> _cptReboot `i -> 5 `i 178  ]
 {
-[; ;main.c: 45: cptReboot = 0;
+[; ;main.c: 44: if (received == cmd_reboot[cptReboot]) {
+"44
+[e $ ! == -> _received `i -> *U + &U _cmd_reboot * -> _cptReboot `ux -> -> # *U &U _cmd_reboot `ui `ux `i 179  ]
+{
+[; ;main.c: 45: cptReboot++;
 "45
-[e = _cptReboot -> -> 0 `i `uc ]
+[e ++ _cptReboot -> -> 1 `i `uc ]
 "46
 }
-[e :U 181 ]
+[; ;main.c: 46: } else {
+[e $U 180  ]
+[e :U 179 ]
+{
+[; ;main.c: 47: cptReboot = 0;
 "47
-}
-[e :U 174 ]
+[e = _cptReboot -> -> 0 `i `uc ]
 "48
 }
-[e :U 173 ]
-[; ;main.c: 46: }
-[; ;main.c: 47: }
+[e :U 180 ]
 [; ;main.c: 48: }
-[; ;main.c: 50: if (IOCAF4) {
+[; ;main.c: 49: if (cptReboot >= 3) {
+"49
+[e $ ! >= -> _cptReboot `i -> 3 `i 181  ]
+{
+[; ;main.c: 50: rebootEnBootloader();
 "50
-[e $ ! _IOCAF4 182  ]
-{
-[; ;main.c: 51: received = PORTA;
+[e ( _rebootEnBootloader ..  ]
 "51
-[e = _received _PORTA ]
-[; ;main.c: 52: if (voieActive == 1) {
+}
+[e :U 181 ]
 "52
-[e $ ! == -> _voieActive `i -> 1 `i 183  ]
+}
+[; ;main.c: 51: }
+[; ;main.c: 52: } else {
+[e $U 182  ]
+[e :U 178 ]
 {
-[; ;main.c: 53: if (RA4) {
+[; ;main.c: 53: cptReboot = 0;
 "53
-[e $ ! _RA4 184  ]
-{
-[; ;main.c: 54: LATA0 = 1;
+[e = _cptReboot -> -> 0 `i `uc ]
 "54
-[e = _LATA0 -> -> 1 `i `b ]
-"55
-}
-[; ;main.c: 55: } else {
-[e $U 185  ]
-[e :U 184 ]
-{
-[; ;main.c: 56: LATA0 = 0;
-"56
-[e = _LATA0 -> -> 0 `i `b ]
-"57
-}
-[e :U 185 ]
-"58
-}
-[e :U 183 ]
-[; ;main.c: 57: }
-[; ;main.c: 58: }
-[; ;main.c: 59: IOCAF4 = 0;
-"59
-[e = _IOCAF4 -> -> 0 `i `b ]
-"60
 }
 [e :U 182 ]
-[; ;main.c: 60: }
-[; ;main.c: 62: if (IOCAF2) {
-"62
-[e $ ! _IOCAF2 186  ]
+"55
+}
+[; ;main.c: 54: }
+[; ;main.c: 55: } else {
+[e $U 183  ]
+[e :U 175 ]
 {
-[; ;main.c: 63: received = PORTA;
-"63
+[; ;main.c: 56: received = RCREG & 0x7F;
+"56
+[e = _received -> & -> _RCREG `i -> 127 `i `uc ]
+"57
+}
+[e :U 183 ]
+"58
+}
+[e :U 173 ]
+[; ;main.c: 57: }
+[; ;main.c: 58: }
+[; ;main.c: 60: if (IOCAF4) {
+"60
+[e $ ! _IOCAF4 184  ]
+{
+[; ;main.c: 61: received = PORTA;
+"61
 [e = _received _PORTA ]
-[; ;main.c: 64: if (voieActive == 0) {
+[; ;main.c: 62: if (voieActive == 1) {
+"62
+[e $ ! == -> _voieActive `i -> 1 `i 185  ]
+{
+[; ;main.c: 63: if (RA4) {
+"63
+[e $ ! _RA4 186  ]
+{
+[; ;main.c: 64: LATA0 = 1;
 "64
-[e $ ! == -> _voieActive `i -> 0 `i 187  ]
-{
-[; ;main.c: 65: if (RA2) {
-"65
-[e $ ! _RA2 188  ]
-{
-[; ;main.c: 66: LATA0 = 1;
-"66
 [e = _LATA0 -> -> 1 `i `b ]
+"65
+}
+[; ;main.c: 65: } else {
+[e $U 187  ]
+[e :U 186 ]
+{
+[; ;main.c: 66: LATA0 = 0;
+"66
+[e = _LATA0 -> -> 0 `i `b ]
 "67
 }
-[; ;main.c: 67: } else {
-[e $U 189  ]
-[e :U 188 ]
-{
-[; ;main.c: 68: LATA0 = 0;
+[e :U 187 ]
 "68
-[e = _LATA0 -> -> 0 `i `b ]
-"69
 }
-[e :U 189 ]
+[e :U 185 ]
+[; ;main.c: 67: }
+[; ;main.c: 68: }
+[; ;main.c: 69: IOCAF4 = 0;
+"69
+[e = _IOCAF4 -> -> 0 `i `b ]
 "70
 }
-[e :U 187 ]
-[; ;main.c: 69: }
+[e :U 184 ]
 [; ;main.c: 70: }
-[; ;main.c: 71: IOCAF2 = 0;
-"71
-[e = _IOCAF2 -> -> 0 `i `b ]
+[; ;main.c: 72: if (IOCAF2) {
 "72
-}
-[e :U 186 ]
-[; ;main.c: 72: }
-[; ;main.c: 75: }
+[e $ ! _IOCAF2 188  ]
+{
+[; ;main.c: 73: received = PORTA;
+"73
+[e = _received _PORTA ]
+[; ;main.c: 74: if (voieActive == 0) {
+"74
+[e $ ! == -> _voieActive `i -> 0 `i 189  ]
+{
+[; ;main.c: 75: if (RA2) {
 "75
+[e $ ! _RA2 190  ]
+{
+[; ;main.c: 76: LATA0 = 1;
+"76
+[e = _LATA0 -> -> 1 `i `b ]
+"77
+}
+[; ;main.c: 77: } else {
+[e $U 191  ]
+[e :U 190 ]
+{
+[; ;main.c: 78: LATA0 = 0;
+"78
+[e = _LATA0 -> -> 0 `i `b ]
+"79
+}
+[e :U 191 ]
+"80
+}
+[e :U 189 ]
+[; ;main.c: 79: }
+[; ;main.c: 80: }
+[; ;main.c: 81: IOCAF2 = 0;
+"81
+[e = _IOCAF2 -> -> 0 `i `b ]
+"82
+}
+[e :U 188 ]
+[; ;main.c: 82: }
+[; ;main.c: 84: }
+"84
 [e :UE 172 ]
 }
-"77
+"86
 [v _ecritOctetStart `(v  1 ef1`uc ]
 {
-[; ;main.c: 77: void ecritOctetStart(unsigned char valeur) {
+[; ;main.c: 86: void ecritOctetStart(unsigned char valeur) {
 [e :U _ecritOctetStart ]
 [v _valeur `uc  1 r1 ]
 [f ]
-[; ;main.c: 78: EEADRL = 0;
-"78
-[e = _EEADRL -> -> 0 `i `uc ]
-[; ;main.c: 79: EEDATL = valeur;
-"79
-[e = _EEDATL _valeur ]
-[; ;main.c: 81: WREN = 1;
-"81
-[e = _WREN -> -> 1 `i `b ]
-[; ;main.c: 83: EECON2=0x55;
-"83
-[e = _EECON2 -> -> 85 `i `uc ]
-[; ;main.c: 84: EECON2=0xAA;
-"84
-[e = _EECON2 -> -> 170 `i `uc ]
-[; ;main.c: 85: WR = 1;
-"85
-[e = _WR -> -> 1 `i `b ]
+[; ;main.c: 87: EEADRL = 0;
 "87
-[;   nop ;#
-"88
-[;   nop ;#
-[; ;main.c: 90: }
-"90
-[e :UE 190 ]
-}
-"92
-[v _litOctetStart `(uc  1 ef ]
-{
-[; ;main.c: 92: char litOctetStart() {
-[e :U _litOctetStart ]
-[f ]
-[; ;main.c: 93: EEADRL = 0;
-"93
 [e = _EEADRL -> -> 0 `i `uc ]
-[; ;main.c: 94: EEPGD = 0;
+[; ;main.c: 88: EEDATL = valeur;
+"88
+[e = _EEDATL _valeur ]
+[; ;main.c: 90: WREN = 1;
+"90
+[e = _WREN -> -> 1 `i `b ]
+[; ;main.c: 92: EECON2=0x55;
+"92
+[e = _EECON2 -> -> 85 `i `uc ]
+[; ;main.c: 93: EECON2=0xAA;
+"93
+[e = _EECON2 -> -> 170 `i `uc ]
+[; ;main.c: 94: WR = 1;
 "94
-[e = _EEPGD -> -> 0 `i `b ]
-[; ;main.c: 95: CFGS = 0;
-"95
-[e = _CFGS -> -> 0 `i `b ]
-[; ;main.c: 96: RD = 1;
+[e = _WR -> -> 1 `i `b ]
 "96
-[e = _RD -> -> 1 `i `b ]
-[; ;main.c: 97: return EEDATL;
+[;   nop ;#
 "97
-[e ) _EEDATL ]
-[e $UE 191  ]
-[; ;main.c: 98: }
-"98
-[e :UE 191 ]
-}
-"101
-[v _rebootEnBootloader `(v  1 ef ]
-{
-[; ;main.c: 101: void rebootEnBootloader() {
-[e :U _rebootEnBootloader ]
-[f ]
-[; ;main.c: 102: GIE = 0;
-"102
-[e = _GIE -> -> 0 `i `b ]
-[; ;main.c: 103: PEIE = 0;
-"103
-[e = _PEIE -> -> 0 `i `b ]
-[; ;main.c: 105: ecritOctetStart('V');
-"105
-[e ( _ecritOctetStart (1 -> -> 86 `ui `uc ]
-"107
-[;   goto 0 ;#
-[; ;main.c: 109: }
-"109
+[;   nop ;#
+[; ;main.c: 99: }
+"99
 [e :UE 192 ]
 }
+"101
+[v _litOctetStart `(uc  1 ef ]
+{
+[; ;main.c: 101: char litOctetStart() {
+[e :U _litOctetStart ]
+[f ]
+[; ;main.c: 102: EEADRL = 0;
+"102
+[e = _EEADRL -> -> 0 `i `uc ]
+[; ;main.c: 103: EEPGD = 0;
+"103
+[e = _EEPGD -> -> 0 `i `b ]
+[; ;main.c: 104: CFGS = 0;
+"104
+[e = _CFGS -> -> 0 `i `b ]
+[; ;main.c: 105: RD = 1;
+"105
+[e = _RD -> -> 1 `i `b ]
+[; ;main.c: 106: return EEDATL;
+"106
+[e ) _EEDATL ]
+[e $UE 193  ]
+[; ;main.c: 107: }
+"107
+[e :UE 193 ]
+}
+"110
+[v _rebootEnBootloader `(v  1 ef ]
+{
+[; ;main.c: 110: void rebootEnBootloader() {
+[e :U _rebootEnBootloader ]
+[f ]
+[; ;main.c: 111: GIE = 0;
 "111
+[e = _GIE -> -> 0 `i `b ]
+[; ;main.c: 112: PEIE = 0;
+"112
+[e = _PEIE -> -> 0 `i `b ]
+[; ;main.c: 114: ecritOctetStart('V');
+"114
+[e ( _ecritOctetStart (1 -> -> 86 `ui `uc ]
+"116
+[;   goto 0 ;#
+[; ;main.c: 118: }
+"118
+[e :UE 194 ]
+}
+"120
 [v _main `(v  1 ef ]
 {
-[; ;main.c: 111: void main() {
+[; ;main.c: 120: void main() {
 [e :U _main ]
 [f ]
-"112
-[v _i `ul  1 a ]
-"113
-[v _commande `uc  1 a ]
-"114
-[v _reponse `uc  1 a ]
-[; ;main.c: 112: unsigned long i;
-[; ;main.c: 113: unsigned char commande;
-[; ;main.c: 114: unsigned char reponse = 'a';
-[e = _reponse -> -> 97 `ui `uc ]
-[; ;main.c: 116: cptReboot = 0;
-"116
-[e = _cptReboot -> -> 0 `i `uc ]
-[; ;main.c: 120: SSPEN = 0;
-"120
-[e = _SSPEN -> -> 0 `i `b ]
-[; ;main.c: 121: CREN = 0;
 "121
-[e = _CREN -> -> 0 `i `b ]
-[; ;main.c: 122: TXEN = 0;
+[v _i `ul  1 a ]
 "122
-[e = _TXEN -> -> 0 `i `b ]
-[; ;main.c: 123: BRGH = 0;
+[v _commande `uc  1 a ]
 "123
-[e = _BRGH -> -> 0 `i `b ]
-[; ;main.c: 124: BRG16 = 1;
-"124
-[e = _BRG16 -> -> 1 `i `b ]
-[; ;main.c: 125: SPBRGL = 1666 & 0xFF;
+[v _reponse `uc  1 a ]
+[; ;main.c: 121: unsigned long i;
+[; ;main.c: 122: unsigned char commande;
+[; ;main.c: 123: unsigned char reponse = 'a';
+[e = _reponse -> -> 97 `ui `uc ]
+[; ;main.c: 125: cptReboot = 0;
 "125
-[e = _SPBRGL -> & -> 1666 `i -> 255 `i `uc ]
-[; ;main.c: 126: SPBRGH = 1666 >> 8;
-"126
-[e = _SPBRGH -> >> -> 1666 `i -> 8 `i `uc ]
-[; ;main.c: 127: SPEN = 1;
-"127
-[e = _SPEN -> -> 1 `i `b ]
-[; ;main.c: 128: CREN = 1;
-"128
-[e = _CREN -> -> 1 `i `b ]
-[; ;main.c: 129: TXEN = 0;
+[e = _cptReboot -> -> 0 `i `uc ]
+[; ;main.c: 129: SSPEN = 0;
 "129
-[e = _TXEN -> -> 0 `i `b ]
-[; ;main.c: 131: TXCKSEL = 0;
+[e = _SSPEN -> -> 0 `i `b ]
+[; ;main.c: 130: CREN = 0;
+"130
+[e = _CREN -> -> 0 `i `b ]
+[; ;main.c: 131: TXEN = 0;
 "131
-[e = _TXCKSEL -> -> 0 `i `b ]
-[; ;main.c: 132: RXDTSEL = 0;
+[e = _TXEN -> -> 0 `i `b ]
+[; ;main.c: 132: BRGH = 0;
 "132
-[e = _RXDTSEL -> -> 0 `i `b ]
-[; ;main.c: 133: T1GSEL = 1;
+[e = _BRGH -> -> 0 `i `b ]
+[; ;main.c: 133: BRG16 = 1;
 "133
-[e = _T1GSEL -> -> 1 `i `b ]
-[; ;main.c: 134: SDOSEL = 0;
+[e = _BRG16 -> -> 1 `i `b ]
+[; ;main.c: 134: SPBRGL = 1666 & 0xFF;
 "134
-[e = _SDOSEL -> -> 0 `i `b ]
-[; ;main.c: 135: TRISA0 = 0;
+[e = _SPBRGL -> & -> 1666 `i -> 255 `i `uc ]
+[; ;main.c: 135: SPBRGH = 1666 >> 8;
 "135
-[e = _TRISA0 -> -> 0 `i `b ]
-[; ;main.c: 136: TRISA5 = 0;
+[e = _SPBRGH -> >> -> 1666 `i -> 8 `i `uc ]
+[; ;main.c: 136: SPEN = 1;
 "136
-[e = _TRISA5 -> -> 0 `i `b ]
-[; ;main.c: 139: TRISA |= (1 << 2);
-"139
-[e =| _TRISA -> << -> 1 `i -> 2 `i `uc ]
-[; ;main.c: 140: WPUA |= (1 << 2);
+[e = _SPEN -> -> 1 `i `b ]
+[; ;main.c: 137: CREN = 1;
+"137
+[e = _CREN -> -> 1 `i `b ]
+[; ;main.c: 138: TXEN = 0;
+"138
+[e = _TXEN -> -> 0 `i `b ]
+[; ;main.c: 140: TXCKSEL = 0;
 "140
-[e =| _WPUA -> << -> 1 `i -> 2 `i `uc ]
-[; ;main.c: 142: TRISA |= (1 << 4);
+[e = _TXCKSEL -> -> 0 `i `b ]
+[; ;main.c: 141: RXDTSEL = 0;
+"141
+[e = _RXDTSEL -> -> 0 `i `b ]
+[; ;main.c: 142: T1GSEL = 1;
 "142
-[e =| _TRISA -> << -> 1 `i -> 4 `i `uc ]
-[; ;main.c: 143: WPUA |= (1 << 4);
+[e = _T1GSEL -> -> 1 `i `b ]
+[; ;main.c: 143: SDOSEL = 0;
 "143
-[e =| _WPUA -> << -> 1 `i -> 4 `i `uc ]
-[; ;main.c: 144: OPTION_REG &= 0x7F;
+[e = _SDOSEL -> -> 0 `i `b ]
+[; ;main.c: 144: TRISA0 = 0;
 "144
-[e =& _OPTION_REG -> -> 127 `i `uc ]
-[; ;main.c: 147: IOCAN = 0;
-"147
-[e = _IOCAN -> -> 0 `i `uc ]
-[; ;main.c: 148: IOCAP = 0;
+[e = _TRISA0 -> -> 0 `i `b ]
+[; ;main.c: 145: TRISA5 = 0;
+"145
+[e = _TRISA5 -> -> 0 `i `b ]
+[; ;main.c: 148: TRISA |= (1 << 2);
 "148
-[e = _IOCAP -> -> 0 `i `uc ]
-[; ;main.c: 149: IOCAN |= 1 << 2;
+[e =| _TRISA -> << -> 1 `i -> 2 `i `uc ]
+[; ;main.c: 149: WPUA |= (1 << 2);
 "149
-[e =| _IOCAN -> << -> 1 `i -> 2 `i `uc ]
-[; ;main.c: 150: IOCAP |= 1 << 2;
-"150
-[e =| _IOCAP -> << -> 1 `i -> 2 `i `uc ]
-[; ;main.c: 151: IOCAN |= 1 << 4;
+[e =| _WPUA -> << -> 1 `i -> 2 `i `uc ]
+[; ;main.c: 151: TRISA |= (1 << 4);
 "151
-[e =| _IOCAN -> << -> 1 `i -> 4 `i `uc ]
-[; ;main.c: 152: IOCAP |= 1 << 4;
+[e =| _TRISA -> << -> 1 `i -> 4 `i `uc ]
+[; ;main.c: 152: WPUA |= (1 << 4);
 "152
-[e =| _IOCAP -> << -> 1 `i -> 4 `i `uc ]
-[; ;main.c: 153: IOCIE = 1;
+[e =| _WPUA -> << -> 1 `i -> 4 `i `uc ]
+[; ;main.c: 153: OPTION_REG &= 0x7F;
 "153
-[e = _IOCIE -> -> 1 `i `b ]
-[; ;main.c: 155: received = PORTA;
-"155
-[e = _received _PORTA ]
-[; ;main.c: 156: IOCAF = 0;
+[e =& _OPTION_REG -> -> 127 `i `uc ]
+[; ;main.c: 156: IOCAN = 0;
 "156
-[e = _IOCAF -> -> 0 `i `uc ]
-[; ;main.c: 158: RCIE = 1;
+[e = _IOCAN -> -> 0 `i `uc ]
+[; ;main.c: 157: IOCAP = 0;
+"157
+[e = _IOCAP -> -> 0 `i `uc ]
+[; ;main.c: 158: IOCAN |= 1 << 2;
 "158
-[e = _RCIE -> -> 1 `i `b ]
-[; ;main.c: 159: PEIE = 1;
+[e =| _IOCAN -> << -> 1 `i -> 2 `i `uc ]
+[; ;main.c: 159: IOCAP |= 1 << 2;
 "159
-[e = _PEIE -> -> 1 `i `b ]
-[; ;main.c: 160: GIE = 1;
+[e =| _IOCAP -> << -> 1 `i -> 2 `i `uc ]
+[; ;main.c: 160: IOCAN |= 1 << 4;
 "160
-[e = _GIE -> -> 1 `i `b ]
-[; ;main.c: 163: if (litOctetStart() != 'D') {
-"163
-[e $ ! != -> ( _litOctetStart ..  `ui -> 68 `ui 194  ]
-{
-[; ;main.c: 164: ecritOctetStart('D');
+[e =| _IOCAN -> << -> 1 `i -> 4 `i `uc ]
+[; ;main.c: 161: IOCAP |= 1 << 4;
+"161
+[e =| _IOCAP -> << -> 1 `i -> 4 `i `uc ]
+[; ;main.c: 162: IOCIE = 1;
+"162
+[e = _IOCIE -> -> 1 `i `b ]
+[; ;main.c: 164: received = PORTA;
 "164
-[e ( _ecritOctetStart (1 -> -> 68 `ui `uc ]
+[e = _received _PORTA ]
+[; ;main.c: 165: IOCAF = 0;
 "165
-}
-[e :U 194 ]
-[; ;main.c: 165: }
-[; ;main.c: 167: while(1) {
+[e = _IOCAF -> -> 0 `i `uc ]
+[; ;main.c: 167: RCIE = 1;
 "167
-[e :U 196 ]
-{
+[e = _RCIE -> -> 1 `i `b ]
+[; ;main.c: 168: PEIE = 1;
 "168
-}
-[e :U 195 ]
-"167
-[e $U 196  ]
-[e :U 197 ]
-[; ;main.c: 168: }
-[; ;main.c: 169: }
+[e = _PEIE -> -> 1 `i `b ]
+[; ;main.c: 169: GIE = 1;
 "169
-[e :UE 193 ]
+[e = _GIE -> -> 1 `i `b ]
+[; ;main.c: 172: if (litOctetStart() != 'D') {
+"172
+[e $ ! != -> ( _litOctetStart ..  `ui -> 68 `ui 196  ]
+{
+[; ;main.c: 173: ecritOctetStart('D');
+"173
+[e ( _ecritOctetStart (1 -> -> 68 `ui `uc ]
+"174
+}
+[e :U 196 ]
+[; ;main.c: 174: }
+[; ;main.c: 176: while(1) {
+"176
+[e :U 198 ]
+{
+"177
+}
+[e :U 197 ]
+"176
+[e $U 198  ]
+[e :U 199 ]
+[; ;main.c: 177: }
+[; ;main.c: 178: }
+"178
+[e :UE 195 ]
 }
